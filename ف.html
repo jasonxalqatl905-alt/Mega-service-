@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Services | منتجعات وسرفيسات فاخرة في العين السخنة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom gold color */
+        .text-gold-500 { color: #b69256; }
+        .bg-gold-500 { background-color: #b69256; }
+        .border-gold-500 { border-color: #b69256; }
+        .hover\:bg-gold-600:hover { background-color: #8b6d3a; }
+        .hover\:text-gold-600:hover { color: #8b6d3a; }
+
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+
+        /* Loading animation */
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .animate-spin { animation: spin 1s linear infinite; }
+
+        /* Custom styles */
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .section-padding { padding: 80px 0; }
+
+        /* Gallery modal */
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gallery-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .gallery-modal img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        /* Payment modal */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .payment-modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        /* Floating buttons */
+        .floating-btn {
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .floating-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Language switcher */
+        .lang-switcher {
+            transition: all 0.3s ease;
+        }
+
+        /* Smart Concierge */
+        .concierge-step {
+            display: none;
+        }
+        
+        .concierge-step.active {
+            display: block;
+        }
+        
+        .recommendation-card {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .recommendation-card.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .section-padding { padding: 60px 0; }
+            .hero-bg { background-attachment: scroll; }
+        }
+        
+        /* RTL and LTR support */
+        [dir="rtl"] .text-left { text-align: right; }
+        [dir="ltr"] .text-left { text-align: left; }
+        
+        [dir="rtl"] .text-right { text-align: left; }
+        [dir="ltr"] .text-right { text-align: right; }
+        
+        [dir="rtl"] .mr-4 { margin-right: 0; margin-left: 1rem; }
+        [dir="ltr"] .ml-4 { margin-left: 0; margin-right: 1rem; }
+
+        /* Enhanced Styles */
+        .recommendation-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .recommendation-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .concierge-step {
+            transition: all 0.3s ease;
+        }
+        
+        .preference-option {
+            transition: all 0.2s ease;
+        }
+        
+        .preference-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Modal styles */
+        .modal {
+            transition: all 0.3s ease;
+        }
+        
+        .modal.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .modal:not(.hidden) {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800" dir="rtl">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="https://i.ibb.co/67c2rfPJ/IMG-20251023-WA0002.jpg" 
+                         alt="Mega Services" 
+                         class="h-12 w-auto transition-all duration-300"
+                         id="logo">
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8" id="desktopNav">
+                    <a href="#home" class="text-white font-medium hover:text-gold-500 transition-colors">الرئيسية</a>
+                    <a href="#about" class="text-white font-medium hover:text-gold-500 transition-colors">عنّا</a>
+                    <a href="#services" class="text-white font-medium hover:text-gold-500 transition-colors">الخدمات</a>
+                    <a href="#concierge" class="text-white font-medium hover:text-gold-500 transition-colors">الكونسيرج الذكي</a>
+                    <a href="#gallery" class="text-white font-medium hover:text-gold-500 transition-colors">المعرض</a>
+                    <a href="#testimonials" class="text-white font-medium hover:text-gold-500 transition-colors">آراء العملاء</a>
+                    <a href="#booking" class="text-white font-medium hover:text-gold-500 transition-colors">الحجز</a>
+                    <a href="#contact" class="text-white font-medium hover:text-gold-500 transition-colors">اتصل بنا</a>
+                    
+                    <!-- أزرار المصادقة -->
+                    <div id="authButtons" class="flex items-center space-x-4">
+                        <button onclick="showLoginModal()" class="text-white hover:text-gold-500 transition-colors">تسجيل الدخول</button>
+                        <button onclick="showRegisterModal()" class="bg-gold-500 hover:bg-gold-600 text-white px-4 py-2 rounded-lg transition-colors">إنشاء حساب</button>
+                    </div>
+
+                    <!-- قائمة المستخدم -->
+                    <div id="userMenu" class="hidden items-center space-x-4">
+                        <!-- سيتم ملؤها ديناميكياً -->
+                    </div>
+
+                    <!-- Language Switcher -->
+                    <div class="flex items-center space-x-2 lang-switcher">
+                        <button id="langAr" class="text-white font-medium border border-white px-2 py-1 rounded text-sm">العربية</button>
+                        <button id="langEn" class="text-gray-300 font-medium border border-gray-300 px-2 py-1 rounded text-sm">English</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white text-2xl" id="mobileMenuBtn">
+                    ☰
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="md:hidden hidden bg-white mt-4 rounded-lg shadow-lg" id="mobileNav">
+                <div class="flex flex-col space-y-3 p-4">
+                    <a href="#home" class="text-gray-800 font-medium py-2 hover:text-gold-500 transition-colors">الرئيسية</a>
+                    <a href="#about" class="text-gray-800 font-medium py-2 hover:text-gold-500 transition-colors">عنّا</a>
+                    <a href="#services" class="text-gray-800 font-medium py-2 hover:text-gold-500 transition-colors">الخدمات</a>
+                    <a href="#concierge" class="text-gray-800 font-medium py-2 hover:text-gold-500 transition-colors">الكونسيرج الذكي</a>
+                    <a href="#gallery" class="text-gray-800 font-medium py-2 hover:text-gold-500 transition-colors">المعرض</a>
+                    <a href="#testimonials" class="text-gray-800 font-medium py-2 hover:text-gold-500 transition-colors">آراء العملاء</a>
+                    <a href="#booking" class="text-gray-800 font-medium py-2 hover:text-gold-500 transition-colors">الحجز</a>
+                    <a href="#contact" class="text-gray-800 font-medium py-2 hover:text-gold-500 transition-colors">اتصل بنا</a>
+                    
+                    <!-- أزرار المصادقة الموبايل -->
+                    <div class="flex flex-col space-y-2 pt-2">
+                        <button onclick="showLoginModal()" class="text-gold-500 font-medium py-2 text-right">تسجيل الدخول</button>
+                        <button onclick="showRegisterModal()" class="bg-gold-500 text-white py-2 px-4 rounded-lg text-center">إنشاء حساب</button>
+                    </div>
+
+                    <!-- Language Switcher Mobile -->
+                    <div class="flex space-x-2 pt-2">
+                        <button id="langArMobile" class="text-gray-800 font-medium border border-gray-800 px-2 py-1 rounded text-sm">العربية</button>
+                        <button id="langEnMobile" class="text-gray-500 font-medium border border-gray-500 px-2 py-1 rounded text-sm">English</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center">
+        <div class="text-center text-white max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">MEGA SERVICES</h1>
+            <p class="text-xl md:text-2xl mb-8 font-light">
+                منتجعات فاخرة، مطاعم راقية، وخدمات مميزة في العين السخنة
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="scrollToSection('booking')" 
+                        class="bg-gold-500 hover:bg-gold-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all">
+                    احجز الآن
+                </button>
+                <button onclick="scrollToSection('concierge')" 
+                        class="border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-lg text-lg font-semibold transition-all">
+                    احصل على توصيات
+                </button>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <button onclick="scrollToSection('about')" 
+                    class="text-white text-2xl animate-bounce">
+                ↓
+            </button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-padding bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">لماذا Mega Services؟</h2>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    الخيار الأفضل للعطلات الفاخرة، تجارب الطعام الاستثنائية، والخدمات المميزة في العين السخنة
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <p class="text-lg text-gray-700 text-center leading-relaxed mb-12">
+                    مع أكثر من 15 عاماً من التميز في مجال الضيافة، نقدم فخامة لا مثيل لها واهتماماً بالتفاصيل 
+                    يميزنا عن الآخرين. التزامنا بالخدمة الاستثنائية يضمن لكل ضيف تجربة مزيج مثالي من الراحة 
+                    والأناقة والضيافة المصرية الأصيلة في أجواء العين السخنة الجميلة.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <div class="text-3xl font-bold text-gold-500 mb-2">15+</div>
+                        <div class="text-gray-600 font-semibold">سنوات من التميز</div>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <div class="text-3xl font-bold text-gold-500 mb-2">5000+</div>
+                        <div class="text-gray-600 font-semibold">ضيف سعيد</div>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <div class="text-3xl font-bold text-gold-500 mb-2">24/7</div>
+                        <div class="text-gray-600 font-semibold">خدمة مميزة</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section-padding bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">خدماتنا</h2>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    اكتشف مجموعة خدماتنا الفاخرة الشاملة
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Service 1 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 p-6 text-center">
+                    <div class="text-5xl mb-4">🏨</div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">منتجعات فاخرة</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        استمتع بأقصى درجات الراحة في منتجعاتنا المطلة على البحر الأحمر مع وسائل الراحة العالمية والإطلالات الخلابة.
+                    </p>
+                    <button onclick="scrollToSection('booking')" 
+                            class="text-gold-500 font-semibold hover:text-gold-600 transition-colors inline-flex items-center gap-2">
+                        <span>احجز الآن</span>
+                        <span>←</span>
+                    </button>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 p-6 text-center">
+                    <div class="text-5xl mb-4">🍽️</div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">مطاعم راقية</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        استمتع بتجارب طهي استثنائية في مطاعمنا الحاصلة على جوائز، التي تقدم المأكولات العالمية والمحلية.
+                    </p>
+                    <button onclick="scrollToSection('booking')" 
+                            class="text-gold-500 font-semibold hover:text-gold-600 transition-colors inline-flex items-center gap-2">
+                        <span>احجز الآن</span>
+                        <span>←</span>
+                    </button>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 p-6 text-center">
+                    <div class="text-5xl mb-4">🚤</div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">جولات مميزة</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        اكتشف جمال العين السخنة مع جولاتنا المختارة، بما في ذلك الغوص، رحلات الصحراء، والتجارب الثقافية.
+                    </p>
+                    <button onclick="scrollToSection('booking')" 
+                            class="text-gold-500 font-semibold hover:text-gold-600 transition-colors inline-flex items-center gap-2">
+                        <span>احجز الآن</span>
+                        <span>←</span>
+                    </button>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 p-6 text-center">
+                    <div class="text-5xl mb-4">🧖‍♀️</div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">سبا وعافية</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        تجدد في منشآت السبا الحديثة لدينا التي تقدم التدليك، العلاجات، وبرامج العافية.
+                    </p>
+                    <button onclick="scrollToSection('booking')" 
+                            class="text-gold-500 font-semibold hover:text-gold-600 transition-colors inline-flex items-center gap-2">
+                        <span>احجز الآن</span>
+                        <span>←</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Concierge Section -->
+    <section id="concierge" class="section-padding bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">الكونسيرج الذكي</h2>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    أخبرنا عن رحلتك المثالية، ودع الذكاء الاصطناعي يقترح لك أفضل الخدمات والتجارب المصممة خصيصًا لك.
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
+                <!-- Step 1: Introduction -->
+                <div id="step1" class="concierge-step active">
+                    <div class="text-center mb-8">
+                        <div class="text-5xl mb-4">🤖</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">مرحبًا بك في الكونسيرج الذكي!</h3>
+                        <p class="text-gray-600 mb-6">
+                            سأسألك بضع أسئلة سريعة لفهم تفضيلاتك وسأقترح أفضل الخدمات والتجارب المناسبة لرحلتك.
+                        </p>
+                        <button onclick="nextStep(2)" class="bg-gold-500 hover:bg-gold-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all">
+                            ابدأ الآن
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Travel Preferences -->
+                <div id="step2" class="concierge-step">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">ما نوع الرحلة التي تخطط لها؟</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:border-gold-500 transition-all text-left preference-option" onclick="selectPreference('romantic')">
+                            <div class="text-3xl mb-2">💑</div>
+                            <h4 class="font-semibold text-gray-800">رحلة رومانسية</h4>
+                            <p class="text-gray-600 text-sm">للعشاق أو شهر العسل</p>
+                        </button>
+                        
+                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:border-gold-500 transition-all text-left preference-option" onclick="selectPreference('family')">
+                            <div class="text-3xl mb-2">👨‍👩‍👧‍👦</div>
+                            <h4 class="font-semibold text-gray-800">عطلة عائلية</h4>
+                            <p class="text-gray-600 text-sm">مع الأطفال أو العائلة الممتدة</p>
+                        </button>
+                        
+                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:border-gold-500 transition-all text-left preference-option" onclick="selectPreference('friends')">
+                            <div class="text-3xl mb-2">👥</div>
+                            <h4 class="font-semibold text-gray-800">رحلة مع الأصدقاء</h4>
+                            <p class="text-gray-600 text-sm">لمجموعة من الأصدقاء</p>
+                        </button>
+                        
+                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:border-gold-500 transition-all text-left preference-option" onclick="selectPreference('solo')">
+                            <div class="text-3xl mb-2">🧘‍♀️</div>
+                            <h4 class="font-semibold text-gray-800">رحلة فردية</h4>
+                            <p class="text-gray-600 text-sm">للاسترخاء والاستكشاف الذاتي</p>
+                        </button>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button onclick="prevStep(1)" class="text-gold-500 font-semibold hover:text-gold-600 transition-colors">رجوع</button>
+                        <button onclick="nextStep(3)" class="bg-gold-500 hover:bg-gold-600 text-white px-6 py-2 rounded-lg font-semibold transition-all">متابعة</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Interests -->
+                <div id="step3" class="concierge-step">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">ما الذي تبحث عنه؟</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="p-4 border-2 border-gray-200 rounded-lg preference-option">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" class="interest-checkbox" value="relaxation">
+                                <span class="text-gray-800 font-medium">الاسترخاء والراحة</span>
+                            </label>
+                        </div>
+                        
+                        <div class="p-4 border-2 border-gray-200 rounded-lg preference-option">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" class="interest-checkbox" value="adventure">
+                                <span class="text-gray-800 font-medium">المغامرة والأنشطة</span>
+                            </label>
+                        </div>
+                        
+                        <div class="p-4 border-2 border-gray-200 rounded-lg preference-option">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" class="interest-checkbox" value="culinary">
+                                <span class="text-gray-800 font-medium">تجارب الطعام</span>
+                            </label>
+                        </div>
+                        
+                        <div class="p-4 border-2 border-gray-200 rounded-lg preference-option">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" class="interest-checkbox" value="wellness">
+                                <span class="text-gray-800 font-medium">العافية والسبا</span>
+                            </label>
+                        </div>
+                        
+                        <div class="p-4 border-2 border-gray-200 rounded-lg preference-option">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" class="interest-checkbox" value="culture">
+                                <span class="text-gray-800 font-medium">الثافة والتراث</span>
+                            </label>
+                        </div>
+                        
+                        <div class="p-4 border-2 border-gray-200 rounded-lg preference-option">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" class="interest-checkbox" value="entertainment">
+                                <span class="text-gray-800 font-medium">الترفيه والعروض</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button onclick="prevStep(2)" class="text-gold-500 font-semibold hover:text-gold-600 transition-colors">رجوع</button>
+                        <button onclick="nextStep(4)" class="bg-gold-500 hover:bg-gold-600 text-white px-6 py-2 rounded-lg font-semibold transition-all">متابعة</button>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Family Size -->
+                <div id="step4" class="concierge-step">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">حجم العائلة (الأفراد)</h3>
+                    
+                    <div class="max-w-md mx-auto mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-gray-700">البالغين</span>
+                            <div class="flex items-center space-x-3">
+                                <button class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center" onclick="changeCount('adults', -1)">-</button>
+                                <span id="adultsCount" class="text-xl font-semibold">2</span>
+                                <button class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center" onclick="changeCount('adults', 1)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">الأطفال</span>
+                            <div class="flex items-center space-x-3">
+                                <button class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center" onclick="changeCount('children', -1)">-</button>
+                                <span id="childrenCount" class="text-xl font-semibold">0</span>
+                                <button class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center" onclick="changeCount('children', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button onclick="prevStep(3)" class="text-gold-500 font-semibold hover:text-gold-600 transition-colors">رجوع</button>
+                        <button onclick="nextStep(5)" class="bg-gold-500 hover:bg-gold-600 text-white px-6 py-2 rounded-lg font-semibold transition-all">متابعة</button>
+                    </div>
+                </div>
+                
+                <!-- Step 5: Dates -->
+                <div id="step5" class="concierge-step">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">التواريخ (اختياري)</h3>
+                    
+                    <div class="max-w-md mx-auto mb-8">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2">تاريخ الوصول</label>
+                            <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" id="checkinDate">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2">تاريخ المغادرة</label>
+                            <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" id="checkoutDate">
+                        </div>
+                        
+                        <p class="text-gray-500 text-sm text-center">هذه المعلومات اختيارية وتساعدنا في تقديم توصيات أكثر دقة</p>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button onclick="prevStep(4)" class="text-gold-500 font-semibold hover:text-gold-600 transition-colors">رجوع</button>
+                        <button onclick="generateRecommendations()" class="bg-gold-500 hover:bg-gold-600 text-white px-6 py-2 rounded-lg font-semibold transition-all">اطلب توصياتك</button>
+                    </div>
+                </div>
+                
+                <!-- Step 6: Recommendations -->
+                <div id="step6" class="concierge-step">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">توصياتنا المخصصة لك</h3>
+                    <p class="text-gray-600 text-center mb-8">بناءً على تفضيلاتك، إليك أفضل الخدمات والتجارب المناسبة لرحلتك:</p>
+                    
+                    <div id="recommendationsContainer" class="space-y-6">
+                        <!-- Recommendations will be generated here -->
+                    </div>
+                    
+                    <div class="text-center mt-8">
+                        <button onclick="scrollToSection('booking')" class="bg-gold-500 hover:bg-gold-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all mr-4">احجز الآن</button>
+                        <button onclick="restartConcierge()" class="text-gold-500 font-semibold hover:text-gold-600 transition-colors">ابدأ من جديد</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-padding bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">معرض الصور</h2>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    استكشف جمال وفخامة Mega Services
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="galleryGrid">
+                <!-- Gallery items will be added dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section-padding bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">آراء عملائنا</h2>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    لا تأخذ كلمتنا فقط - استمع إلى عملائنا الراضين
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow p-6 relative">
+                    <div class="text-6xl text-gold-500 opacity-20 absolute -top-2 -right-2">"</div>
+                    <div class="flex justify-center mb-3">
+                        <span class="text-yellow-400 text-lg">★★★★★</span>
+                    </div>
+                    <p class="text-gray-600 italic mb-6 relative z-10 leading-relaxed">
+                        كانت إقامتنا في Mega Services مثالية تماماً. الاهتمام بالتفاصيل، الخدمة الاستثنائية، والمناطق المحيطة الجميلة جعلت عطلتنا لا تُنسى.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center text-white font-bold">
+                            س
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">سارة جونسون</h4>
+                            <p class="text-sm text-gray-500">من القاهرة، مصر</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow p-6 relative">
+                    <div class="text-6xl text-gold-500 opacity-20 absolute -top-2 -right-2">"</div>
+                    <div class="flex justify-center mb-3">
+                        <span class="text-yellow-400 text-lg">★★★★★</span>
+                    </div>
+                    <p class="text-gray-600 italic mb-6 relative z-10 leading-relaxed">
+                        كانت تجربة الطعام استثنائية. كل وجبة كانت رحلة طهي، وقد تجاوز الطاقم التوقعات لجعل ذكرى زواجنا خاصة.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center text-white font-bold">
+                            أ
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">أحمد حسن</h4>
+                            <p class="text-sm text-gray-500">من دبي، الإمارات</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow p-6 relative">
+                    <div class="text-6xl text-gold-500 opacity-20 absolute -top-2 -right-2">"</div>
+                    <div class="flex justify-center mb-3">
+                        <span class="text-yellow-400 text-lg">★★★★★</span>
+                    </div>
+                    <p class="text-gray-600 italic mb-6 relative z-10 leading-relaxed">
+                        كانت جولة الغوص التي نظمتها Mega Services هي أبرز ما في رحلتنا. المرشدون المحترفون والمواقع البكر جعلوها تجربة رائعة.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center text-white font-bold">
+                            م
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">ماريا رودريغيز</h4>
+                            <p class="text-sm text-gray-500">من مدريد، إسبانيا</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="section-padding bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">احجز تجربتك</h2>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    احجز رحلتك الفاخرة مع Mega Services
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Booking Information -->
+                <div class="space-y-8">
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-2xl font-bold text-gold-500 mb-6">لماذا تحجز معنا؟</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 bg-gold-500 rounded-full"></div>
+                                <span class="text-gray-700">ضمان أفضل سعر</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 bg-gold-500 rounded-full"></div>
+                                <span class="text-gray-700">سياسة إلغاء مرنة</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 bg-gold-500 rounded-full"></div>
+                                <span class="text-gray-700">دعم عملاء 24/7</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 bg-gold-500 rounded-full"></div>
+                                <span class="text-gray-700">صفقات حصرية للضيوف العائدين</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 bg-gold-500 rounded-full"></div>
+                                <span class="text-gray-700">خدمة شخصية واهتمام</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gold-500 mb-4">اتصل بفريق الحجز</h3>
+                        <p class="text-gray-600 mb-4">
+                            فريق الحجز المخصص لدينا متاح لمساعدتك في تخطيط رحلتك المثالية. 
+                            اتصل بنا للطلبات الخاصة أو حجوزات المجموعات.
+                        </p>
+                        <div class="space-y-2">
+                            <p><strong>هاتف:</strong> +20 123 456 7890</p>
+                            <p><strong>بريد إلكتروني:</strong> bookings@megaservices.com</p>
+                            <p><strong>واتساب:</strong> +20 123 456 7890</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Form -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <form id="bookingForm" class="space-y-6">
+                        <div class="space-y-4">
+                            <label class="block text-gray-700 font-medium">نوع الخدمة</label>
+                            <select name="service" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" required>
+                                <option value="">اختر خدمة</option>
+                                <option value="resort">إقامة في منتجع فاخر</option>
+                                <option value="dining">تجربة طعام راقية</option>
+                                <option value="tour">جولة مميزة</option>
+                                <option value="spa">سبا وعافية</option>
+                                <option value="package">باقة خاصة</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-4">
+                                <label class="block text-gray-700 font-medium">تاريخ الوصول</label>
+                                <input type="date" name="checkIn" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" required>
+                            </div>
+                            <div class="space-y-4">
+                                <label class="block text-gray-700 font-medium">تاريخ المغادرة</label>
+                                <input type="date" name="checkOut" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-4">
+                                <label class="block text-gray-700 font-medium">البالغون</label>
+                                <select name="adults" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" required>
+                                    <option value="1">1</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
+                            <div class="space-y-4">
+                                <label class="block text-gray-700 font-medium">الأطفال</label>
+                                <select name="children" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500">
+                                    <option value="0" selected>0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label class="block text-gray-700 font-medium">الاسم الكامل</label>
+                            <input type="text" name="name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" required>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label class="block text-gray-700 font-medium">البريد الإلكتروني</label>
+                            <input type="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" required>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label class="block text-gray-700 font-medium">رقم الهاتف</label>
+                            <input type="tel" name="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" required>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label class="block text-gray-700 font-medium">طلبات خاصة</label>
+                            <textarea name="requests" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" rows="4"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gold-500 hover:bg-gold-600 text-white py-4 rounded-lg text-lg font-semibold transition-all">
+                            إرسال طلب الحجز
+                        </button>
+
+                        <!-- Payment Option -->
+                        <div class="mt-6 text-center">
+                            <p class="text-gray-600 mb-4">أو ادفع فوراً باستخدام QR code</p>
+                            <button type="button" onclick="showPaymentModal()" 
+                                    class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all">
+                                ادفع بـ QR Code
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">اتصل بنا</h2>
+                <div class="w-16 h-1 bg-gold-500 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    تواصل مع فريقنا لأي استفسارات
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Contact Information -->
+                <div class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-xl p-6 text-center">
+                            <div class="text-3xl text-gold-500 mb-3">📍</div>
+                            <h3 class="font-semibold mb-2">العنوان</h3>
+                            <p class="text-gray-300">طريق البحر الأحمر، العين السخنة، مصر</p>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-xl p-6 text-center">
+                            <div class="text-3xl text-gold-500 mb-3">📞</div>
+                            <h3 class="font-semibold mb-2">هاتف</h3>
+                            <p class="text-gray-300">+20 123 456 7890</p>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-xl p-6 text-center">
+                            <div class="text-3xl text-gold-500 mb-3">✉️</div>
+                            <h3 class="font-semibold mb-2">بريد إلكتروني</h3>
+                            <p class="text-gray-300">info@megaservices.com</p>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-xl p-6 text-center">
+                            <div class="text-3xl text-gold-500 mb-3">⏰</div>
+                            <h3 class="font-semibold mb-2">ساعات العمل</h3>
+                            <p class="text-gray-300">24/7 طوال العام</p>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="bg-gray-800 rounded-xl p-6">
+                        <div class="h-64 bg-gray-700 rounded-lg flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl text-gold-500 mb-3">🗺️</div>
+                                <p class="text-gray-300">خريطة تفاعلية</p>
+                                <p class="text-sm text-gray-400 mt-1">العين السخنة، مصر</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-gray-800 rounded-xl p-8">
+                    <form class="space-y-6">
+                        <div class="space-y-4">
+                            <label class="block text-white font-medium">الاسم الكامل</label>
+                            <input type="text" name="contact-name" class="w-full p-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" required>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label class="block text-white font-medium">البريد الإلكتروني</label>
+                            <input type="email" name="contact-email" class="w-full p-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" required>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label class="block text-white font-medium">الموضوع</label>
+                            <input type="text" name="contact-subject" class="w-full p-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500" required>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label class="block text-white font-medium">الرسالة</label>
+                            <textarea name="contact-message" class="w-full p-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 min-h-[150px]" required></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gold-500 hover:bg-gold-600 text-white py-4 rounded-lg text-lg font-semibold transition-all">
+                            إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Bookings Section -->
+    <section id="myBookings" class="section-padding bg-gray-50 hidden">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">حجوزاتي</h2>
+            <div id="userBookings" class="max-w-2xl mx-auto">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <img src="https://i.ibb.co/67c2rfPJ/IMG-20251023-WA0002.jpg" 
+                             alt="Mega Services" 
+                             class="h-12 w-auto mr-3">
+                        <span class="text-2xl font-bold">Mega Services</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        تقديم تجارب ضيافة فاخرة في العين السخنة منذ 2008. 
+                        التزامنا بالتميز يضمن لحظات لا تُنسى لجميع ضيوفنا.
+                    </p>
+                    <div class="flex space-x-4">
+                        <button class="w-10 h-10 bg-gray-700 hover:bg-gold-500 rounded-full flex items-center justify-center transition-all">
+                            <span class="text-white">f</span>
+                        </button>
+                        <button class="w-10 h-10 bg-gray-700 hover:bg-gold-500 rounded-full flex items-center justify-center transition-all">
+                            <span class="text-white">t</span>
+                        </button>
+                        <button class="w-10 h-10 bg-gray-700 hover:bg-gold-500 rounded-full flex items-center justify-center transition-all">
+                            <span class="text-white">i</span>
+                        </button>
+                        <button class="w-10 h-10 bg-gray-700 hover:bg-gold-500 rounded-full flex items-center justify-center transition-all">
+                            <span class="text-white">y</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">روابط سريعة</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-300 hover:text-gold-500 transition-colors">الرئيسية</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-gold-500 transition-colors">عنّا</a></li>
+                        <li><a href="#services" class="text-gray-300 hover:text-gold-500 transition-colors">الخدمات</a></li>
+                        <li><a href="#gallery" class="text-gray-300 hover:text-gold-500 transition-colors">المعرض</a></li>
+                        <li><a href="#contact" class="text-gray-300 hover:text-gold-500 transition-colors">اتصل بنا</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">الخدمات</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-gold-500 transition-colors">إقامة فاخرة</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-gold-500 transition-colors">طعام راقي</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-gold-500 transition-colors">سبا وعافية</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-gold-500 transition-colors">جولات مغامرة</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-gold-500 transition-colors">تخطيط فعاليات</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">النشرة البريدية</h3>
+                    <p class="text-gray-300 mb-4">
+                        اشترك في نشرتنا الإخبارية للحصول على عروض خاصة وتحديثات.
+                    </p>
+                    <div class="flex flex-col space-y-3">
+                        <input type="email" placeholder="بريدك الإلكتروني" 
+                               class="p-3 bg-gray-800 border border-gray-600 text-white rounded-lg">
+                        <button class="bg-gold-500 hover:bg-gold-600 text-white py-3 rounded-lg transition-all">
+                            اشترك
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-300 text-sm">
+                    © 2024 Mega Services. جميع الحقوق محفوظة.
+                </p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-300 hover:text-gold-500 text-sm transition-colors">سياسة الخصوصية</a>
+                    <a href="#" class="text-gray-300 hover:text-gold-500 text-sm transition-colors">شروط الخدمة</a>
+                    <a href="#" class="text-gray-300 hover:text-gold-500 text-sm transition-colors">سياسة الكوكيز</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">تسجيل الدخول</h3>
+                <button onclick="hideLoginModal()" class="text-2xl">&times;</button>
+            </div>
+            <form id="loginForm">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">البريد الإلكتروني</label>
+                        <input type="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">كلمة المرور</label>
+                        <input type="password" name="password" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500">
+                    </div>
+                    <button type="submit" class="w-full bg-gold-500 hover:bg-gold-600 text-white py-3 rounded-lg font-semibold transition-colors">
+                        تسجيل الدخول
+                    </button>
+                </div>
+            </form>
+            <p class="text-center mt-4 text-gray-600">
+                ليس لديك حساب؟ 
+                <button onclick="showRegisterModal()" class="text-gold-500 hover:underline">سجل الآن</button>
+            </p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">إنشاء حساب جديد</h3>
+                <button onclick="hideRegisterModal()" class="text-2xl">&times;</button>
+            </div>
+            <form id="registerForm">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">الاسم الكامل</label>
+                        <input type="text" name="name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">البريد الإلكتروني</label>
+                        <input type="email" name="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">رقم الهاتف</label>
+                        <input type="tel" name="phone" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">كلمة المرور</label>
+                        <input type="password" name="password" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500">
+                    </div>
+                    <button type="submit" class="w-full bg-gold-500 hover:bg-gold-600 text-white py-3 rounded-lg font-semibold transition-colors">
+                        إنشاء حساب
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">الدفع الآمن</h3>
+                <button onclick="hidePaymentModal()" class="text-2xl">&times;</button>
+            </div>
+            <div class="text-center">
+                <p class="text-gray-600 mb-6">امسح QR Code أدناه لإتمام الدفع</p>
+                
+                <!-- QR Code Placeholder -->
+                <div class="bg-white p-4 rounded-lg border border-gray-300 inline-block mb-6">
+                    <div class="w-64 h-64 bg-gray-100 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-4xl mb-2">📱</div>
+                            <p class="text-gray-500 text-sm">QR Code للدفع</p>
+                            <p class="text-gray-400 text-xs mt-2">امسح بتطبيق البنك الخاص بك</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-gray-600 mb-4">المبلغ: <span class="font-bold">$500.00</span></p>
+                    <button onclick="completePayment()" 
+                            class="bg-gold-500 hover:bg-gold-600 text-white px-8 py-3 rounded-lg font-semibold transition-all">
+                        لقد أكملت الدفع
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div class="gallery-modal" id="galleryModal">
+        <div class="gallery-modal-content">
+            <span class="absolute top-4 right-4 text-white text-3xl cursor-pointer z-10" onclick="closeGalleryModal()">&times;</span>
+            <img id="modalImage" src="" alt="">
+            <div class="text-white text-center mt-4" id="modalCaption"></div>
+            <div class="flex justify-between mt-4">
+                <button class="text-white text-2xl" onclick="changeGalleryImage(-1)">❮</button>
+                <button class="text-white text-2xl" onclick="changeGalleryImage(1)">❯</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Buttons -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col space-y-3">
+        <!-- Book Now Button -->
+        <button onclick="scrollToSection('booking')" 
+                class="bg-gold-500 hover:bg-gold-600 rounded-full p-4 shadow-lg transition-all duration-300 text-white floating-btn">
+            📅
+        </button>
+
+        <!-- Concierge Button -->
+        <button onclick="scrollToSection('concierge')" 
+                class="bg-purple-500 hover:bg-purple-600 rounded-full p-4 shadow-lg transition-all duration-300 text-white">
+            🤖
+        </button>
+
+        <!-- WhatsApp Button -->
+        <button onclick="openWhatsApp()" 
+                class="bg-green-500 hover:bg-green-600 rounded-full p-4 shadow-lg transition-all duration-300 text-white">
+            💬
+        </button>
+
+        <!-- Call Button -->
+        <button onclick="makeCall()" 
+                class="bg-blue-500 hover:bg-blue-600 rounded-full p-4 shadow-lg transition-all duration-300 text-white">
+            📞
+        </button>
+
+        <!-- Back to Top Button -->
+        <button onclick="scrollToTop()" 
+                class="bg-gray-800 hover:bg-gray-900 rounded-full p-4 shadow-lg transition-all duration-300 text-white floating-btn">
+            ↑
+        </button>
+    </div>
+
+    <script>
+        // ==================== SYSTEM INITIALIZATION ====================
+        
+        // نظام إدارة الحالة
+        const AppState = {
+            currentUser: null,
+            bookings: [],
+            sessions: [],
+            language: 'ar',
+            currentConciergeData: {},
+            
+            init() {
+                this.loadFromStorage();
+                this.setupEventListeners();
+                this.checkAuthStatus();
+                this.initGallery();
+                this.setupForms();
+                this.setupLanguageSwitcher();
+            },
+            
+            loadFromStorage() {
+                const user = localStorage.getItem('currentUser');
+                if (user) {
+                    this.currentUser = JSON.parse(user);
+                }
+                
+                const bookings = localStorage.getItem('userBookings');
+                if (bookings) {
+                    this.bookings = JSON.parse(bookings);
+                }
+                
+                const lang = localStorage.getItem('preferredLanguage');
+                if (lang) {
+                    this.language = lang;
+                }
+            },
+            
+            setupEventListeners() {
+                // تحديث واجهة المستخدم عند تغيير الحالة
+                this.updateUI();
+            },
+            
+            setUser(user) {
+                this.currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.updateUI();
+                showNotification('تم تسجيل الدخول بنجاح!', 'success');
+            },
+            
+            addBooking(booking) {
+                this.bookings.unshift(booking);
+                localStorage.setItem('userBookings', JSON.stringify(this.bookings));
+                this.updateBookingsDisplay();
+            },
+            
+            updateUI() {
+                this.updateAuthButtons();
+                this.updateUserProfile();
+            },
+            
+            updateAuthButtons() {
+                const authButtons = document.getElementById('authButtons');
+                const userMenu = document.getElementById('userMenu');
+                
+                if (this.currentUser) {
+                    if (authButtons) authButtons.style.display = 'none';
+                    if (userMenu) {
+                        userMenu.style.display = 'block';
+                        userMenu.innerHTML = `
+                            <div class="flex items-center space-x-3">
+                                <span class="text-white">مرحباً، ${this.currentUser.name}</span>
+                                <button onclick="AppState.logout()" class="text-sm bg-white text-gold-500 px-3 py-1 rounded hover:bg-gray-100">
+                                    تسجيل الخروج
+                                </button>
+                            </div>
+                        `;
+                    }
+                } else {
+                    if (authButtons) authButtons.style.display = 'flex';
+                    if (userMenu) userMenu.style.display = 'none';
+                }
+            },
+            
+            updateUserProfile() {
+                // يمكن إضافة تحديث للملف الشخصي هنا
+            },
+            
+            updateBookingsDisplay() {
+                const bookingsContainer = document.getElementById('userBookings');
+                if (bookingsContainer) {
+                    if (this.bookings.length === 0) {
+                        bookingsContainer.innerHTML = `
+                            <div class="text-center py-8 text-gray-500">
+                                <p>لا توجد حجوزات حالياً</p>
+                            </div>
+                        `;
+                    } else {
+                        bookingsContainer.innerHTML = this.bookings.map(booking => `
+                            <div class="bg-white p-4 rounded-lg shadow mb-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="font-bold">${this.getServiceName(booking.serviceType)}</h4>
+                                        <p class="text-sm text-gray-600">${new Date(booking.checkIn).toLocaleDateString()} - ${new Date(booking.checkOut).toLocaleDateString()}</p>
+                                        <p class="text-sm">${booking.adults} بالغين، ${booking.children} أطفال</p>
+                                    </div>
+                                    <span class="px-3 py-1 rounded-full text-sm ${
+                                        booking.status === 'confirmed' ? 'bg-green-100 text-green-800' :
+                                        booking.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                                        'bg-gray-100 text-gray-800'
+                                    }">
+                                        ${this.getStatusText(booking.status)}
+                                    </span>
+                                </div>
+                                <div class="mt-3 flex justify-between items-center">
+                                    <span class="font-bold text-gold-500">$${booking.totalAmount}</span>
+                                    <button onclick="cancelBooking('${booking.id}')" class="text-red-500 text-sm hover:text-red-700">
+                                        إلغاء
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                }
+            },
+            
+            getServiceName(serviceType) {
+                const services = {
+                    resort: 'منتجع فاخر',
+                    dining: 'تجربة طعام',
+                    tour: 'جولة سياحية',
+                    spa: 'سبا وعافية',
+                    package: 'باقة خاصة'
+                };
+                return services[serviceType] || serviceType;
+            },
+            
+            getStatusText(status) {
+                const statuses = {
+                    pending: 'قيد الانتظار',
+                    confirmed: 'مؤكد',
+                    cancelled: 'ملغى',
+                    completed: 'مكتمل'
+                };
+                return statuses[status] || status;
+            },
+            
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('currentUser');
+                this.updateUI();
+                showNotification('تم تسجيل الخروج بنجاح', 'success');
+            },
+            
+            checkAuthStatus() {
+                if (this.currentUser) {
+                    this.updateUI();
+                }
+            },
+            
+            initGallery() {
+                const galleryImages = [
+                    {
+                        src: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                        title: 'منتجع على الشاطئ',
+                        description: 'إقامة فاخرة مطلة على البحر'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                        title: 'طعام ذواقة',
+                        description: 'تجارب طهي استثنائية'
+                    },
+                    {
+                        src: 'https://images.unsplash.com/photo-1501786223405-6d024d7c3b8d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                        title: 'مغامرة الغوص',
+                        description: 'استكشف الحياة البحرية في البحر الأحمر'
+                    }
+                ];
+
+                const galleryGrid = document.getElementById('galleryGrid');
+                if (galleryGrid) {
+                    galleryGrid.innerHTML = galleryImages.map((image, index) => `
+                        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                            <div class="relative overflow-hidden">
+                                <img src="${image.src}" alt="${image.title}" 
+                                     class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                                     onclick="openGalleryModal(${index})">
+                                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                                    <span class="text-white text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">👁️ عرض</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg text-gray-800 mb-1">${image.title}</h3>
+                                <p class="text-gray-600 text-sm">${image.description}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            },
+            
+            setupForms() {
+                // نموذج التسجيل
+                const registerForm = document.getElementById('registerForm');
+                if (registerForm) {
+                    registerForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        
+                        const formData = new FormData(registerForm);
+                        const userData = {
+                            name: formData.get('name'),
+                            email: formData.get('email'),
+                            password: formData.get('password'),
+                            phone: formData.get('phone')
+                        };
+                        
+                        try {
+                            // محاكاة API call
+                            const result = await this.mockRegister(userData);
+                            if (result.success) {
+                                this.setUser(result.data.user);
+                                hideRegisterModal();
+                                registerForm.reset();
+                            }
+                        } catch (error) {
+                            showNotification(error.message, 'error');
+                        }
+                    });
+                }
+                
+                // نموذج تسجيل الدخول
+                const loginForm = document.getElementById('loginForm');
+                if (loginForm) {
+                    loginForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        
+                        const formData = new FormData(loginForm);
+                        const credentials = {
+                            email: formData.get('email'),
+                            password: formData.get('password')
+                        };
+                        
+                        try {
+                            // محاكاة API call
+                            const result = await this.mockLogin(credentials);
+                            if (result.success) {
+                                this.setUser(result.data.user);
+                                hideLoginModal();
+                                loginForm.reset();
+                            }
+                        } catch (error) {
+                            showNotification(error.message, 'error');
+                        }
+                    });
+                }
+                
+                // نموذج الحجز
+                const bookingForm = document.getElementById('bookingForm');
+                if (bookingForm) {
+                    bookingForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        
+                        const formData = new FormData(bookingForm);
+                        const bookingData = {
+                            serviceType: formData.get('service'),
+                            checkIn: formData.get('checkIn'),
+                            checkOut: formData.get('checkOut'),
+                            adults: parseInt(formData.get('adults')),
+                            children: parseInt(formData.get('children')),
+                            specialRequests: formData.get('requests'),
+                            guestInfo: {
+                                name: formData.get('name'),
+                                email: formData.get('email'),
+                                phone: formData.get('phone')
+                            },
+                            totalAmount: this.calculateBookingAmount(
+                                formData.get('service'),
+                                parseInt(formData.get('adults')),
+                                parseInt(formData.get('children')),
+                                formData.get('checkIn'),
+                                formData.get('checkOut')
+                            ),
+                            status: 'pending',
+                            paymentStatus: 'pending',
+                            id: Date.now().toString(),
+                            createdAt: new Date().toISOString()
+                        };
+
+                        this.addBooking(bookingData);
+                        showNotification('تم إنشاء الحجز بنجاح!', 'success');
+                        bookingForm.reset();
+                    });
+                }
+            },
+            
+            setupLanguageSwitcher() {
+                document.getElementById('langAr').addEventListener('click', () => this.switchLanguage('ar'));
+                document.getElementById('langEn').addEventListener('click', () => this.switchLanguage('en'));
+                document.getElementById('langArMobile').addEventListener('click', () => this.switchLanguage('ar'));
+                document.getElementById('langEnMobile').addEventListener('click', () => this.switchLanguage('en'));
+            },
+            
+            switchLanguage(lang) {
+                this.language = lang;
+                localStorage.setItem('preferredLanguage', lang);
+                
+                if (lang === 'ar') {
+                    document.documentElement.dir = 'rtl';
+                    document.getElementById('langAr').classList.add('text-white', 'border-white');
+                    document.getElementById('langAr').classList.remove('text-gray-300', 'border-gray-300');
+                    document.getElementById('langEn').classList.add('text-gray-300', 'border-gray-300');
+                    document.getElementById('langEn').classList.remove('text-white', 'border-white');
+                    
+                    document.getElementById('langArMobile').classList.add('text-gray-800', 'border-gray-800');
+                    document.getElementById('langArMobile').classList.remove('text-gray-500', 'border-gray-500');
+                    document.getElementById('langEnMobile').classList.add('text-gray-500', 'border-gray-500');
+                    document.getElementById('langEnMobile').classList.remove('text-gray-800', 'border-gray-800');
+                } else {
+                    document.documentElement.dir = 'ltr';
+                    document.getElementById('langAr').classList.add('text-gray-300', 'border-gray-300');
+                    document.getElementById('langAr').classList.remove('text-white', 'border-white');
+                    document.getElementById('langEn').classList.add('text-white', 'border-white');
+                    document.getElementById('langEn').classList.remove('text-gray-300', 'border-gray-300');
+                    
+                    document.getElementById('langArMobile').classList.add('text-gray-500', 'border-gray-500');
+                    document.getElementById('langArMobile').classList.remove('text-gray-800', 'border-gray-800');
+                    document.getElementById('langEnMobile').classList.add('text-gray-800', 'border-gray-800');
+                    document.getElementById('langEnMobile').classList.remove('text-gray-500', 'border-gray-500');
+                }
+                
+                showNotification(`Language switched to ${lang === 'ar' ? 'Arabic' : 'English'}`, 'info');
+            },
+            
+            calculateBookingAmount(serviceType, adults, children, checkIn, checkOut) {
+                const pricing = {
+                    resort: 250,
+                    dining: 120,
+                    tour: 75,
+                    spa: 200,
+                    package: 350
+                };
+                
+                const basePrice = pricing[serviceType] || 250;
+                const days = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24)) || 1;
+                
+                return basePrice * days * adults + (basePrice * days * children * 0.5);
+            },
+            
+            async mockRegister(userData) {
+                // محاكاة تأخير الشبكة
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // محاكاة التحقق من البريد الإلكتروني
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const existingUser = users.find(user => user.email === userData.email);
+                if (existingUser) {
+                    throw new Error('البريد الإلكتروني مسجل مسبقاً');
+                }
+                
+                // إنشاء مستخدم جديد
+                const newUser = {
+                    id: Date.now().toString(),
+                    ...userData,
+                    role: 'user',
+                    createdAt: new Date().toISOString()
+                };
+                
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                return {
+                    success: true,
+                    data: {
+                        user: {
+                            id: newUser.id,
+                            name: newUser.name,
+                            email: newUser.email,
+                            phone: newUser.phone,
+                            role: newUser.role
+                        }
+                    }
+                };
+            },
+            
+            async mockLogin(credentials) {
+                // محاكاة تأخير الشبكة
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // محاكاة التحقق من بيانات الدخول
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(u => u.email === credentials.email && u.password === credentials.password);
+                
+                if (!user) {
+                    throw new Error('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+                }
+                
+                return {
+                    success: true,
+                    data: {
+                        user: {
+                            id: user.id,
+                            name: user.name,
+                            email: user.email,
+                            phone: user.phone,
+                            role: user.role
+                        }
+                    }
+                };
+            }
+        };
+
+        // ==================== CONCIERGE SYSTEM ====================
+        
+        let currentConciergeStep = 1;
+        let conciergeData = {
+            preference: '',
+            interests: [],
+            adults: 2,
+            children: 0,
+            checkIn: '',
+            checkOut: ''
+        };
+
+        function nextStep(step) {
+            document.querySelectorAll('.concierge-step').forEach(s => {
+                s.classList.remove('active');
+            });
+            
+            const targetStep = document.getElementById(`step${step}`);
+            if (targetStep) {
+                targetStep.classList.add('active');
+                currentConciergeStep = step;
+                
+                targetStep.style.opacity = '0';
+                targetStep.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    targetStep.style.opacity = '1';
+                    targetStep.style.transform = 'translateY(0)';
+                }, 50);
+            }
+        }
+
+        function prevStep(step) {
+            nextStep(step);
+        }
+
+        function selectPreference(preference) {
+            conciergeData.preference = preference;
+            
+            // إضافة تأثير visual للاختيار
+            document.querySelectorAll('.preference-option').forEach(option => {
+                option.classList.remove('border-gold-500', 'bg-gold-50');
+            });
+            event.target.classList.add('border-gold-500', 'bg-gold-50');
+        }
+
+        function changeCount(type, change) {
+            let countElement = document.getElementById(`${type}Count`);
+            let currentCount = parseInt(countElement.textContent);
+            let newCount = currentCount + change;
+            
+            if (type === 'adults' && newCount < 1) return;
+            if (type === 'children' && newCount < 0) return;
+            
+            countElement.textContent = newCount;
+            conciergeData[type] = newCount;
+        }
+
+        function generateRecommendations() {
+            // حفظ بيانات التواريخ
+            conciergeData.checkIn = document.getElementById('checkinDate').value;
+            conciergeData.checkOut = document.getElementById('checkoutDate').value;
+            
+            // توليد التوصيات
+            const recommendations = generateConciergeRecommendations(conciergeData);
+            displayRecommendations(recommendations);
+            nextStep(6);
+        }
+
+        function generateConciergeRecommendations(data) {
+            let recommendations = [];
+            
+            // توصيات أساسية
+            recommendations.push({
+                serviceType: 'resort',
+                title: {
+                    ar: 'غرفة ديلوكس بإطلالة على البحر',
+                    en: 'Deluxe Room with Sea View'
+                },
+                description: {
+                    ar: 'غرفة فاخرة مع إطلالة بانورامية على البحر الأحمر وتضم أحدث وسائل الراحة',
+                    en: 'Luxurious room with panoramic views of the Red Sea featuring modern amenities'
+                },
+                price: {
+                    ar: 'ابتداءً من 250$ / ليلة',
+                    en: 'From $250 / night'
+                },
+                duration: {
+                    ar: 'إقامة مريحة',
+                    en: 'Comfortable stay'
+                },
+                icon: '🏨'
+            });
+            
+            // توصيات حسب نوع الرحلة
+            if (data.preference === 'romantic') {
+                recommendations.push({
+                    serviceType: 'package',
+                    title: {
+                        ar: 'باقة رومانسية خاصة',
+                        en: 'Special Romantic Package'
+                    },
+                    description: {
+                        ar: 'تشمل عشاء رومانسي خاص، زجاجة نبيذ، وجلسة سبا للزوجين',
+                        en: 'Includes private romantic dinner, bottle of wine, and couples spa session'
+                    },
+                    price: {
+                        ar: 'ابتداءً من 150$',
+                        en: 'From $150'
+                    },
+                    duration: {
+                        ar: 'تجربة لا تنسى',
+                        en: 'Unforgettable experience'
+                    },
+                    icon: '💖'
+                });
+            } else if (data.preference === 'family') {
+                recommendations.push({
+                    serviceType: 'package',
+                    title: {
+                        ar: 'باقة العائلة',
+                        en: 'Family Package'
+                    },
+                    description: {
+                        ar: `تشمل أنشطة للأطفال، وجبات عائلية، وغرف متصلة لـ ${data.adults + data.children} أفراد`,
+                        en: `Includes kids activities, family meals, and connecting rooms for ${data.adults + data.children} people`
+                    },
+                    price: {
+                        ar: 'ابتداءً من 350$ / ليلة',
+                        en: 'From $350 / night'
+                    },
+                    duration: {
+                        ar: 'مثالية للعائلات',
+                        en: 'Perfect for families'
+                    },
+                    icon: '👨‍👩‍👧‍👦'
+                });
+            }
+            
+            return recommendations;
+        }
+
+        function displayRecommendations(recommendations) {
+            const container = document.getElementById('recommendationsContainer');
+            if (!container) return;
+            
+            container.innerHTML = recommendations.map((rec, index) => `
+                <div class="recommendation-card bg-white rounded-xl shadow-lg p-6 mb-4" style="animation-delay: ${index * 100}ms">
+                    <div class="flex items-start space-x-4">
+                        <div class="text-3xl flex-shrink-0">${rec.icon}</div>
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-lg text-gray-800 mb-2">
+                                ${AppState.language === 'ar' ? rec.title.ar : rec.title.en}
+                            </h4>
+                            <p class="text-gray-600 mb-3">
+                                ${AppState.language === 'ar' ? rec.description.ar : rec.description.en}
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gold-500 font-bold">
+                                    ${AppState.language === 'ar' ? rec.price.ar : rec.price.en}
+                                </span>
+                                <span class="text-sm text-gray-500">
+                                    ${AppState.language === 'ar' ? rec.duration.ar : rec.duration.en}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="bookRecommendation('${rec.serviceType}')" 
+                                class="bg-gold-500 hover:bg-gold-600 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                            احجز الآن
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // تفعيل animations
+            setTimeout(() => {
+                document.querySelectorAll('.recommendation-card').forEach(card => {
+                    card.classList.add('show');
+                });
+            }, 100);
+        }
+
+        function bookRecommendation(serviceType) {
+            scrollToSection('booking');
+            const serviceSelect = document.querySelector('#bookingForm select[name="service"]');
+            if (serviceSelect) {
+                serviceSelect.value = serviceType;
+            }
+        }
+
+        function restartConcierge() {
+            conciergeData = {
+                preference: '',
+                interests: [],
+                adults: 2,
+                children: 0,
+                checkIn: '',
+                checkOut: ''
+            };
+            
+            document.querySelectorAll('.preference-option').forEach(btn => {
+                btn.classList.remove('border-gold-500', 'bg-gold-50');
+            });
+            
+            document.querySelectorAll('.interest-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            document.getElementById('adultsCount').textContent = '2';
+            document.getElementById('childrenCount').textContent = '0';
+            document.getElementById('checkinDate').value = '';
+            document.getElementById('checkoutDate').value = '';
+            
+            nextStep(1);
+        }
+
+        // ==================== NOTIFICATION SYSTEM ====================
+        
+        function showNotification(message, type = 'info', duration = 5000) {
+            const notification = document.createElement('div');
+            const typeStyles = {
+                success: 'bg-green-500 text-white',
+                error: 'bg-red-500 text-white',
+                warning: 'bg-yellow-500 text-white',
+                info: 'bg-blue-500 text-white'
+            };
+            
+            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 transform transition-all duration-300 ${typeStyles[type]}`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <span class="text-lg">${getNotificationIcon(type)}</span>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-lg hover:opacity-70">×</button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.style.transform = 'translateX(100%)';
+                        setTimeout(() => notification.remove(), 300);
+                    }
+                }, duration);
+            }
+            
+            return notification;
+        }
+
+        function getNotificationIcon(type) {
+            const icons = {
+                success: '✅',
+                error: '❌',
+                warning: '⚠️',
+                info: 'ℹ️'
+            };
+            return icons[type] || 'ℹ️';
+        }
+
+        // ==================== MODAL FUNCTIONS ====================
+        
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function hideLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function showRegisterModal() {
+            document.getElementById('registerModal').classList.remove('hidden');
+        }
+
+        function hideRegisterModal() {
+            document.getElementById('registerModal').classList.add('hidden');
+        }
+
+        function showPaymentModal() {
+            document.getElementById('paymentModal').classList.remove('hidden');
+        }
+
+        function hidePaymentModal() {
+            document.getElementById('paymentModal').classList.add('hidden');
+        }
+
+        function completePayment() {
+            showNotification('تم تأكيد الدفع بنجاح!', 'success');
+            hidePaymentModal();
+        }
+
+        // ==================== GALLERY FUNCTIONS ====================
+        
+        let currentGalleryIndex = 0;
+        const galleryImages = [
+            {
+                src: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                title: 'منتجع على الشاطئ',
+                description: 'إقامة فاخرة مطلة على البحر'
+            },
+            {
+                src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                title: 'طعام ذواقة',
+                description: 'تجارب طهي استثنائية'
+            }
+        ];
+
+        function openGalleryModal(index) {
+            currentGalleryIndex = index;
+            const modal = document.getElementById('galleryModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            const image = galleryImages[currentGalleryIndex];
+            
+            modalImage.src = image.src;
+            modalCaption.textContent = `${image.title} - ${image.description}`;
+            modal.style.display = 'flex';
+        }
+
+        function closeGalleryModal() {
+            const modal = document.getElementById('galleryModal');
+            modal.style.display = 'none';
+        }
+
+        function changeGalleryImage(direction) {
+            currentGalleryIndex = (currentGalleryIndex + direction + galleryImages.length) % galleryImages.length;
+            
+            const image = galleryImages[currentGalleryIndex];
+            const modalImage = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            modalImage.src = image.src;
+            modalCaption.textContent = `${image.title} - ${image.description}`;
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
+        
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 80;
+                const elementPosition = element.offsetTop - offset;
+                window.scrollTo({
+                    top: elementPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function openWhatsApp() {
+            window.open('https://wa.me/201234567890', '_blank');
+        }
+
+        function makeCall() {
+            window.open('tel:+201234567890');
+        }
+
+        function cancelBooking(bookingId) {
+            if (confirm('هل أنت متأكد من إلغاء هذا الحجز؟')) {
+                AppState.bookings = AppState.bookings.filter(b => b.id !== bookingId);
+                localStorage.setItem('userBookings', JSON.stringify(AppState.bookings));
+                AppState.updateBookingsDisplay();
+                showNotification('تم إلغاء الحجز', 'success');
+            }
+        }
+
+        // ==================== NAVIGATION & MOBILE MENU ====================
+        
+        function initNavigation() {
+            const navbar = document.getElementById('navbar');
+            const logo = document.getElementById('logo');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            const floatingBtns = document.querySelectorAll('.floating-btn');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-white', 'shadow-lg');
+                    navbar.classList.remove('bg-transparent');
+                    logo.classList.add('h-10');
+                    logo.classList.remove('h-12');
+                    floatingBtns.forEach(btn => btn.classList.add('show'));
+                    
+                    document.querySelectorAll('#desktopNav a').forEach(link => {
+                        link.classList.remove('text-white');
+                        link.classList.add('text-gray-800');
+                    });
+                } else {
+                    navbar.classList.remove('bg-white', 'shadow-lg');
+                    navbar.classList.add('bg-transparent');
+                    logo.classList.remove('h-10');
+                    logo.classList.add('h-12');
+                    floatingBtns.forEach(btn => btn.classList.remove('show'));
+                    
+                    document.querySelectorAll('#desktopNav a').forEach(link => {
+                        link.classList.add('text-white');
+                        link.classList.remove('text-gray-800');
+                    });
+                }
+            });
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('#mobileNav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNav.classList.add('hidden');
+                });
+            });
+
+            // إغلاق النوافذ عند النقر خارجها
+            document.addEventListener('click', function(e) {
+                const modals = ['loginModal', 'registerModal', 'paymentModal'];
+                modals.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+            });
+
+            // إغلاق النوافذ بالزر Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.getElementById('loginModal').classList.add('hidden');
+                    document.getElementById('registerModal').classList.add('hidden');
+                    document.getElementById('paymentModal').classList.add('hidden');
+                }
+            });
+        }
+
+        // ==================== INITIALIZATION ====================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            AppState.init();
+            initNavigation();
+            
+            // تعيين الحد الأدنى للتواريخ
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('checkinDate').min = today;
+            document.getElementById('checkoutDate').min = today;
+            
+            const bookingCheckin = document.querySelector('input[name="checkIn"]');
+            const bookingCheckout = document.querySelector('input[name="checkOut"]');
+            if (bookingCheckin) bookingCheckin.min = today;
+            if (bookingCheckout) bookingCheckout.min = today;
+            
+            console.log('Mega Services - Frontend Loaded Successfully!');
+        });
+
+    </script>
+</body>
+</html>
